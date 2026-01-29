@@ -1,1 +1,68 @@
+import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
 
+const renderer = new THREE.WebGLRenderer();
+
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+camera.position.set(0, 0, 100);
+
+const scene = new THREE.Scene();
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+const material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+
+const points1 = [
+  new THREE.Vector3(-10, 0, 0),
+  new THREE.Vector3(0, 10, 0),
+  new THREE.Vector3(10, 0, 0),
+  new THREE.Vector3(-10, 0, 0)
+];
+
+const points2 = [
+  new THREE.Vector3(-10, 0, 0),
+  new THREE.Vector3(0, 0, -10),
+  new THREE.Vector3(0, 10, 0),
+  new THREE.Vector3(-10, 0, 0)
+];
+
+const points3 = [
+  new THREE.Vector3(10, 0, 0),
+  new THREE.Vector3(0, 0, -10),
+  new THREE.Vector3(0, 10, 0),
+  new THREE.Vector3(10, 0, 0)
+];
+
+const points4 = [
+  new THREE.Vector3(-10, 0, 0),
+  new THREE.Vector3(0, 0, -10),
+  new THREE.Vector3(10, 0, 0),
+  new THREE.Vector3(-10, 0, 0)
+];
+
+const geometryp1 = new THREE.BufferGeometry().setFromPoints(points1);
+const geometryp2 = new THREE.BufferGeometry().setFromPoints(points2);
+const geometryp3 = new THREE.BufferGeometry().setFromPoints(points3);
+const geometryp4 = new THREE.BufferGeometry().setFromPoints(points4);
+
+const Triangle1 = new THREE.Line(geometryp1, material);
+const Triangle2 = new THREE.Line(geometryp2, material);
+const Triangle3 = new THREE.Line(geometryp3, material);
+const Triangle4 = new THREE.Line(geometryp4, material);
+
+scene.add(Triangle1);
+scene.add(Triangle2);
+scene.add(Triangle3);
+scene.add(Triangle4);
+
+function animate() {
+  requestAnimationFrame(animate);
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+animate();
