@@ -52,7 +52,7 @@ const v7 = new THREE.Vector3(-t, yTop,  t);
 
 const v8 = new THREE.Vector3(0, yTip, 0);
 
-// Face 1: CSS-String
+// Face 1: CSS-String - RED
 const Face1 = new THREE.Mesh(
   new THREE.BufferGeometry().setFromPoints([v0, v1, v5, v4]),
   new THREE.MeshPhongMaterial({ color: "red", side: THREE.FrontSide })
@@ -60,7 +60,7 @@ const Face1 = new THREE.Mesh(
 Face1.geometry.setIndex([0,1,2,0,2,3]);
 Face1.geometry.computeVertexNormals();
 
-//Face 2 : Hexadecimal notation
+//Face 2 : Hexadecimal notation - Green
 const Face2 = new THREE.Mesh(
   new THREE.BufferGeometry().setFromPoints([v1, v2, v6, v5]),
   new THREE.MeshPhongMaterial({ color: 0x00ff88, side: THREE.FrontSide })
@@ -68,7 +68,7 @@ const Face2 = new THREE.Mesh(
 Face2.geometry.setIndex([0,1,2,0,2,3]);
 Face2.geometry.computeVertexNormals();
 
-//Face 3: RGB
+//Face 3: RGB - Blue
 const Face3 = new THREE.Mesh(
   new THREE.BufferGeometry().setFromPoints([v2, v3, v7, v6]),
   new THREE.MeshPhongMaterial({ color: "rgb(80,80,255)", side: THREE.FrontSide })
@@ -76,7 +76,7 @@ const Face3 = new THREE.Mesh(
 Face3.geometry.setIndex([0,1,2,0,2,3]);
 Face3.geometry.computeVertexNormals();
 
-
+//Face 4: RGB - Yellow
 const Face4 = new THREE.Mesh(
   new THREE.BufferGeometry().setFromPoints([v3, v0, v4, v7]),
   new THREE.MeshPhongMaterial({ color: "rgb(200,200,50)", side: THREE.FrontSide })
@@ -84,7 +84,7 @@ const Face4 = new THREE.Mesh(
 Face4.geometry.setIndex([0,1,2,0,2,3]);
 Face4.geometry.computeVertexNormals();
 
-//Face 5: Three.ColorKeyword
+//Face 5: Three.ColorKeyword - Gray
 const Face5 = new THREE.Mesh(
   new THREE.BufferGeometry().setFromPoints([v4, v5, v8]),
   new THREE.MeshPhongMaterial({ color: new THREE.Color(0.8,0.8,0.9), side: THREE.FrontSide })
