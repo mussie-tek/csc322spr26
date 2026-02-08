@@ -1,0 +1,141 @@
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.module.js';
+import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
+camera.position.set(0, 60, 120);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000); //black
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enableZoom = true;
+controls.target.set(0, 25, 0);
+
+const light = new THREE.DirectionalLight(0xffffff, 1.0);
+light.position.set(50, 100, 50);
+scene.add(light);
+
+const ambient = new THREE.AmbientLight(0xffffff, 0.35);
+scene.add(ambient);
+//dimentions 
+const baseWidth = 5.5;
+const topWidth  = 3.4;
+const totalH    = 55.5;
+const pyramidH  = 5.5;
+const shaftH    = totalH - pyramidH;
+
+//have a variable to make it esaiser
+const yBase = 0;
+
+const b = baseWidth / 2; //base
+const t = topWidth  / 2; //top
+
+const yTop  = shaftH;
+const yTip  = totalH;
+
+//vertices (x,y,z)
+const v0 = new THREE.Vector3(-b, yBase, -b);
+const v1 = new THREE.Vector3( b, yBase, -b);
+const v2 = new THREE.Vector3( b, yBase,  b);
+const v3 = new THREE.Vector3(-b, yBase,  b);
+
+const v4 = new THREE.Vector3(-t, yTop, -t);
+const v5 = new THREE.Vector3( t, yTop, -t);
+const v6 = new THREE.Vector3( t, yTop,  t);
+const v7 = new THREE.Vector3(-t, yTop,  t);
+
+const v8 = new THREE.Vector3(0, yTip, 0);
+
+// Face 1: CSS-String
+const Face1 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v0, v1, v5, v4]),
+  new THREE.MeshPhongMaterial({ color: "red", side: THREE.FrontSide })
+);
+Face1.geometry.setIndex([0,1,2,0,2,3]);
+Face1.geometry.computeVertexNormals();
+
+//Face 2 : Hexadecimal notation
+const Face2 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v1, v2, v6, v5]),
+  new THREE.MeshPhongMaterial({ color: 0x00ff88, side: THREE.FrontSide })
+);
+Face2.geometry.setIndex([0,1,2,0,2,3]);
+Face2.geometry.computeVertexNormals();
+
+//Face 3: RGB
+const Face3 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v2, v3, v7, v6]),
+  new THREE.MeshPhongMaterial({ color: "rgb(80,80,255)", side: THREE.FrontSide })
+);
+Face3.geometry.setIndex([0,1,2,0,2,3]);
+Face3.geometry.computeVertexNormals();
+
+
+const Face4 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v3, v0, v4, v7]),
+  new THREE.MeshPhongMaterial({ color: "rgb(200,200,50)", side: THREE.FrontSide })
+);
+Face4.geometry.setIndex([0,1,2,0,2,3]);
+Face4.geometry.computeVertexNormals();
+
+//Face 5: Three.ColorKeyword
+const Face5 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v4, v5, v8]),
+  new THREE.MeshPhongMaterial({ color: new THREE.Color(0.8,0.8,0.9), side: THREE.FrontSide })
+);
+Face5.geometry.setIndex([0,1,2]);
+Face5.geometry.computeVertexNormals();
+
+const Face6 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v5, v6, v8]),
+  new THREE.MeshPhongMaterial({ color: new THREE.Color(0.7,0.7,0.95), side: THREE.FrontSide })
+);
+Face6.geometry.setIndex([0,1,2]);
+Face6.geometry.computeVertexNormals();
+
+const Face7 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v6, v7, v8]),
+  new THREE.MeshPhongMaterial({ color: 0xffcc88, side: THREE.FrontSide })
+);
+Face7.geometry.setIndex([0,1,2]);
+Face7.geometry.computeVertexNormals();
+
+const Face8 = new THREE.Mesh(
+  new THREE.BufferGeometry().setFromPoints([v7, v4, v8]),
+  new THREE.MeshPhongMaterial({ color: "lightblue", side: THREE.FrontSide })
+);
+Face8.geometry.setIndex([0,1,2]);
+Face8.geometry.computeVertexNormals();
+
+scene.add(Face1);
+scene.add(Face2);
+scene.add(Face3);
+scene.add(Face4);
+scene.add(Face5);
+scene.add(Face6);
+scene.add(Face7);
+scene.add(Face8);
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  Face1.rotation.y += 0.003;
+  Face2.rotation.y += 0.003;
+  Face3.rotation.y += 0.003;
+  Face4.rotation.y += 0.003;
+  Face5.rotation.y += 0.003;
+  Face6.rotation.y += 0.003;
+  Face7.rotation.y += 0.003;
+  Face8.rotation.y += 0.003;
+
+  controls.update();
+  renderer.render(scene, camera);
+}
+
+animate();
